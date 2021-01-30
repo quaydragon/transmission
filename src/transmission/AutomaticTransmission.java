@@ -35,7 +35,12 @@ public class AutomaticTransmission implements Transmission {
            ||  (thresholdTwo > thresholdThree) 
            || (thresholdThree > thresholdFour) 
            || (thresholdFour > thresholdFive) 
-           || (speed < 0)) {
+           || (speed < 0)
+           || (thresholdOne < 0)
+           || (thresholdTwo < 0)
+           || (thresholdThree < 0)
+           || (thresholdFour < 0)
+           || (thresholdFive < 0)) {
       throw new IllegalArgumentException("Thresholds must increase. \n "
                         + "Speed must not be less than 0.");
     }
@@ -115,10 +120,17 @@ public class AutomaticTransmission implements Transmission {
   }
   
   
-  //TODO: Create the toString() override method
-  
-  
-  //TODO: Write gear determination javadox
+  /**
+   * Returns overrode toString() method with the transmissions gear and speed.
+   * 
+   * @return string containing the transmission's speed and gear
+   */
+  @Override
+  public String toString() {
+    String gearSpeed = String.format("Transmission (speed = %d, gear = %d)", this.speed, this.gear);
+    return gearSpeed;
+  }
+
   
   /**
   * Return the gear from the speed initialized originally.
@@ -152,9 +164,11 @@ public class AutomaticTransmission implements Transmission {
   
   
 
-  
-  //make certain it cannot go above threshold
-  
+  /**
+   * Return the automatic transmission object with +2 speed.
+   * 
+   * @return the automatic transmission object 
+   */
   public AutomaticTransmission increaseSpeed() {
     this.speed += 2;
     this.gear = this.gearDetermination();
@@ -162,13 +176,16 @@ public class AutomaticTransmission implements Transmission {
   }
   
   
-  //TODO: Decrease Speed method
-  //make an illegal state exception if speed goes below 0
   
-  
-  
-  public AutomaticTransmission decreaseSpeed() {
-    //TODO: throw that exception right back if there is a mutha fn issue
+  /**
+   * Return the automatic transmission object with -2 speed.
+   * @return
+   */
+  public AutomaticTransmission decreaseSpeed() throws IllegalArgumentException {
+    if (this.speed == 0) {
+      throw new IllegalStateException("Car is already stopped!");    
+    }
+    System.out.println(this.speed);
     this.speed -= 2;
     this.gear = this.gearDetermination();
     return this;
