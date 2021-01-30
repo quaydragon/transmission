@@ -1,12 +1,11 @@
 package transmission;
 
 /**
- * This class 
+ * This class represents an automatic transmission.
  * @author quaydragon
  *
  */
 public class AutomaticTransmission implements Transmission {
-  //TODO: This class automatically determines current gear by current speed
   private final int thresholdOne;
   private final int thresholdTwo;
   private final int thresholdThree;
@@ -14,22 +13,32 @@ public class AutomaticTransmission implements Transmission {
   private final int thresholdFive;
   private int speed;
   private int gear;
-//  private final int gear = 0;
 
-/**
- * 
- * @param thresholdOne
- * @param thresholdTwo
- * @param thresholdThree
- * @param thresholdFour
- * @param thresholdFive
- */
+
+  /**
+  * Constructs an automatic transmission.
+  * 
+  * @param thresholdOne the 1st speed threshold switching from 1st to 2nd gear
+  * @param thresholdTwo the 2nd speed threshold switching from 2nd to 3rd gear
+  * @param thresholdThree the 3rd speed threshold switching from 3rd to 4th gear
+  * @param thresholdFour the 4th speed threshold switching from 4th to 5th gear
+  * @param thresholdFive the 5th speed threshold switching from 5th to 6th gear
+  */
   public AutomaticTransmission(int thresholdOne, 
           int thresholdTwo, 
           int thresholdThree, 
           int thresholdFour, 
           int thresholdFive,
-          int speed) {      
+          int speed) throws IllegalArgumentException {  
+      
+    if ((thresholdOne > thresholdTwo) 
+           ||  (thresholdTwo > thresholdThree) 
+           || (thresholdThree > thresholdFour) 
+           || (thresholdFour > thresholdFive) 
+           || (speed < 0)) {
+      throw new IllegalArgumentException("Thresholds must increase. \n "
+                        + "Speed must not be less than 0.");
+    }
     this.thresholdOne = thresholdOne;
     this.thresholdTwo = thresholdTwo;
     this.thresholdThree = thresholdThree;
@@ -40,35 +49,67 @@ public class AutomaticTransmission implements Transmission {
       
   }
   
-  //TODO: make illegal argument exception
   
-  
-  // TODO: Make Javadocs
-  
+  /**
+   * Return the 1st threshold of the automatic transmission.
+   * 
+   * @return the 1st threshold of the automatic transmission
+   */
   public int getThresholdOne() {
     return this.thresholdOne;
   }
   
+  /**
+  * Return the 2nd threshold of the automatic transmission.
+  * 
+  * @return the 2nd threshold of the automatic transmission
+  */
   public int getThresholdTwo() {
     return this.thresholdTwo;
   }
   
+  
+  /**
+  * Return the 3rd threshold of the automatic transmission.
+  * 
+  * @return the 3rd threshold of the automatic transmission
+  */
   public int getThresholdThree() {
     return this.thresholdThree;
   }
   
+  /**
+  * Return the 4th threshold of the automatic transmission.
+  * 
+  * @return the 4th threshold of the automatic transmission
+  */
   public int getThresholdFour() {
     return this.thresholdFour;
   }
   
+  /**
+  * Return the 5th threshold of the automatic transmission.
+  * 
+  * @return the 5th threshold of the automatic transmission
+  */
   public int getThresholdFive() {
     return this.thresholdFive;
   }
   
+  /**
+  * Return the speed the car is traveling.
+  * 
+  * @return the speed the car is traveling
+  */
   public int getSpeed() {
     return this.speed;
   }
   
+  /**
+  * Return the gear the transmission is in.
+  * 
+  * @return the gear the transmission is in
+  */
   public int getGear() {
     return this.gear;
   }
@@ -79,7 +120,11 @@ public class AutomaticTransmission implements Transmission {
   
   //TODO: Write gear determination javadox
   
-  
+  /**
+  * Return the gear from the speed initialized originally.
+  * 
+  * @return the gear the transmission is in
+  */
   private int gearDetermination() {
     int speed = this.speed;
     int gear;
@@ -106,7 +151,7 @@ public class AutomaticTransmission implements Transmission {
   
   
   
-  //TODO: Increase Speed method
+
   
   //make certain it cannot go above threshold
   
